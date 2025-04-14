@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--メタ-->
+	<div th:fragment="meta" th:remove="tag">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</div>
+	
+	<!--スタイル-->
+	<div th:fragment="style" th:remove="tag">
+		<!-- Bootstrap -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	
+		<!--Google Font-->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	
+		<!--css-->
+		<link th:href="@{/css/style.css}" rel="stylesheet" >
+	</div>
+	
+<title>固定部品</title>
+</head>
+<body>
+	<!--ヘッダー-->
+	<div th:fragment="header" th:remove="tag">
+		<nav>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2">
+				        <div class="p-3">
+				            <a href="/" class="logo-black-link">
+								<h1>SpringCart</h1>
+				            </a>
+				        </div>
+					</div>
+					<div class="col-md-9"></div>
+					<div class="col-md-1">
+						<div class="p-3">
+							<div class="dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+									  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+									  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+									</svg>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a class="dropdown-item" href="#">カート</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="#">会員情報</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="#">商品登録</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="#">ログアウト</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="キーワードを入力">
+						<button class="btn btn-primary" type="button" id="button-addon2">
+							<i>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+									<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+								</svg>
+							</i>
+							検索
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--JS-->
+	<div th:fragment="js" ht:remove="tag">
+		<!--Bootstrap JavaScript-->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	</div>
+
+</body>
+</html>

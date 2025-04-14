@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+h1 {
+  font-family: "Prompt", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.logo-black-link {
+    color: #212529 !important; /* Bootstrapの黒色を使用 */
+    text-decoration: none;     /* 下線を消す */
+}
+        
+.logo-black-link:hover {
+    color: #212529 !important;
+    text-decoration: none;
+}

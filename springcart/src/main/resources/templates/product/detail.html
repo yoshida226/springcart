@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: style}"></div>
+
+<title>検索結果</title>
+</head>
+<body>
+	<div th:replace="~{fragment :: header}"></div>
+	
+	<nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+			<div class="col-xxl-9 col-xl-10 col-lg-11">
+			    <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+			        <ol class="breadcrumb mb-0">
+			            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+			            <li class="breadcrumb-item"><a th:href="@{/product/list(category=${product.category})}">商品一覧</a></li>
+						<li class="breadcrumb-item active" aria-current="page">商品詳細</li>
+			        </ol>
+			    </nav>
+            </div>
+        </div>
+    </nav>
+
+	<!-- 検索結果 -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2">
+			    <img th:if="${product.image}" th:src="@{/images/__${product.image}__}" class="springcart-image" alt="商品画像">
+			    <img th:unless="${product.image}" src="/images/no-image.jpg" class="springcart-image" alt="画像なし">
+			</div>
+			<div class="col-md-4">
+				<p th:text="${product.name}"></p>
+				<p th:text="${product.description}"></p>
+			</div>
+		</div>
+	</div>
+	
+	<!--JS-->
+	<div th:replace="~{fragment :: js}"></div>
+</body>
+</html>

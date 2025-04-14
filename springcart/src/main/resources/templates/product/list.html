@@ -10,58 +10,63 @@
 	<div th:replace="~{fragment :: header}"></div>
 	
 	<nav class="navbar navbar-expand-lg navbar-light">
-	                <div class="container-fluid">
-	                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-	                        <span class="navbar-toggler-icon"></span>
-	                    </button>
-	                    <div class="collapse navbar-collapse" id="navbarNav">
-	                        <ul class="navbar-nav me-auto">
-	                            <li class="nav-item">
-	                                <a class="nav-link" href="/">ホーム</a>
-	                            </li>
-	                            <li class="nav-item">
-	                                <a class="nav-link active" href="/products">商品一覧</a>
-	                            </li>
-	                        </ul>
-	                        <div class="dropdown">
-	                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">メニュー</a>
-	                            <ul class="dropdown-menu text-center">
-	                                <li>
-	                                    <a class="nav-link" href="/products/register">商品登録</a>
-	                                </li>
-	                                <li>
-	                                    <a class="nav-link" href="/logout">ログアウト</a>
-	                                </li>
-	                            </ul>
-	                        </div>
-	                    </div>
-	                </div>
-	            </nav>
-
-	<!-- 検索結果 -->
-    <div class="alert alert-info" th:if="${products.empty}">
-        検索条件に一致する商品が見つかりませんでした。
-    </div>
-    
-    <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${!products.empty}">
-        <div class="col" th:each="product : ${products.content}">
-            <div class="card h-100">
-                <img th:if="${product.image}" th:src="${product.image}" class="card-img-top" alt="商品画像">
-                <img th:unless="${product.image}" src="/images/no-image.jpg" class="card-img-top" alt="画像なし">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${product.name}"></h5>
-                    <p class="card-text">
-                        <small class="text-muted" th:text="${'ショップ: ' + product.shop.name}">ショップ名</small>
-                    </p>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                    <a th:href="@{/products/{id}(id=${product.id})}" class="btn btn-sm btn-outline-primary">詳細</a>
-                    <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-outline-secondary">編集</a>
-                </div>
+        <div class="container-fluid">
+			<div class="col-xxl-9 col-xl-10 col-lg-11">
+			    <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+			        <ol class="breadcrumb mb-0">
+			            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+			            <li class="breadcrumb-item active" aria-current="page">商品一覧</li>
+			        </ol>
+			    </nav>
             </div>
         </div>
-    </div>
+    </nav>
+
+	<!-- 検索結果 -->
+	<div class="container">
+		<div class="alert alert-info" th:if="${products.empty}">
+		    検索条件に一致する商品が見つかりませんでした。
+		</div>
 	
+		<div class="row row-cols-1 row-cols-md-4 g-4" th:if="${!products.empty}">
+		    <div class="col" th:each="product : ${products}">
+				<a th:href="@{/product/{id}(id=${product.id})}" class="text-decoration-none text-dark">
+					<div class="card h-100">
+			            <img th:if="${product.image}" th:src="@{/images/__${product.image}__}" class="card-img-top springcart-image-grid" alt="商品画像">
+			            <img th:unless="${product.image}" src="/images/no-image.jpg" class="card-img-top springcart-image-grid" alt="画像なし">
+			            <div class="card-body">
+			                <h5 class="card-title" th:text="${product.name}"></h5>
+			                <p class="card-text">
+			                    <small class="text-muted" th:text="${'ショップ: ' + product.shop.name}">ショップ名</small>
+			                </p>
+			            </div>
+			        </div>
+				</a>
+		    </div>
+		</div>
+	</div>
+	
+	<!-- ページネーション -->
+	<nav aria-label="ページネーション">
+	  <ul class="pagination justify-content-center mt-4">
+
+	    <li class="page-item" th:classappend="${products.currentPage == 0} ? 'disabled'">
+	      <a class="page-link" th:href="@{/product/list(page=${currentPage - 1}, category=${category}, keyword=${keyword})}">前へ</a>
+	    </li>
+
+	    <li class="page-item"
+	        th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+	        th:classappend="${i == currentPage} ? 'active'">
+	      <a class="page-link" th:href="@{/product/list(page=${i}, category=${category}, keyword=${keyword})}"
+	         th:text="${i + 1}"></a>
+	    </li>
+
+	    <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+	      <a class="page-link" th:href="@{/product/list(page=${currentPage + 1}, category=${category}, keyword=${keyword})}">次へ</a>
+	    </li>
+
+	  </ul>
+	</nav>
 	
 	<!--JS-->
 	<div th:replace="~{fragment :: js}"></div>

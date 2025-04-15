@@ -27,11 +27,11 @@
 	<!--ヘッダー-->
 	<div th:fragment="header" th:remove="tag">
 		<nav>
-			<div class="container">
+			<div class="container-fluid bg-secondary">
 				<div class="row">
 					<div class="col-md-2">
-				        <div class="p-3">
-				            <a href="/" class="logo-black-link">
+				        <div class="p-1">
+				            <a th:href="@{/}" class="link-light link-opacity-100-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover text-decoration-none">
 								<h1>SpringCart</h1>
 				            </a>
 				        </div>

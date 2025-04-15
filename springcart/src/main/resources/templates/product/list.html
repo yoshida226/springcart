@@ -28,7 +28,7 @@
 		    検索条件に一致する商品が見つかりませんでした。
 		</div>
 	
-		<div class="row row-cols-1 row-cols-md-4 g-4" th:if="${!products.empty}">
+		<div class="row row-cols-1 row-cols-md-3 g-4" th:if="${!products.empty}">
 		    <div class="col" th:each="product : ${products}">
 				<a th:href="@{/product/{id}(id=${product.id})}" class="text-decoration-none text-dark">
 					<div class="card h-100">
@@ -50,12 +50,12 @@
 	<nav aria-label="ページネーション">
 	  <ul class="pagination justify-content-center mt-4">
 
-	    <li class="page-item" th:classappend="${products.currentPage == 0} ? 'disabled'">
+	    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
 	      <a class="page-link" th:href="@{/product/list(page=${currentPage - 1}, category=${category}, keyword=${keyword})}">前へ</a>
 	    </li>
 
 	    <li class="page-item"
-	        th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+	        th:each="i : ${pageNumbers}"
 	        th:classappend="${i == currentPage} ? 'active'">
 	      <a class="page-link" th:href="@{/product/list(page=${i}, category=${category}, keyword=${keyword})}"
 	         th:text="${i + 1}"></a>

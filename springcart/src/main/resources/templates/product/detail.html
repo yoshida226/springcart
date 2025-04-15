@@ -15,7 +15,7 @@
 			    <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 			        <ol class="breadcrumb mb-0">
 			            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-			            <li class="breadcrumb-item"><a th:href="@{/product/list(category=${product.category})}">商品一覧</a></li>
+			            <li class="breadcrumb-item"><a th:href="@{/product/list(category=${product.category})}" th:text="'カテゴリー：' + ${product.category}"></a></li>
 						<li class="breadcrumb-item active" aria-current="page">商品詳細</li>
 			        </ol>
 			    </nav>
@@ -23,21 +23,75 @@
         </div>
     </nav>
 
-	<!-- 検索結果 -->
+	<!-- 詳細 -->
 	<div class="container">
-		<div class="row">
-			<div class="col-md-2">
-			    <img th:if="${product.image}" th:src="@{/images/__${product.image}__}" class="springcart-image" alt="商品画像">
-			    <img th:unless="${product.image}" src="/images/no-image.jpg" class="springcart-image" alt="画像なし">
-			</div>
-			<div class="col-md-4">
-				<p th:text="${product.name}"></p>
-				<p th:text="${product.description}"></p>
+	    <div class="row g-4 align-items-start">
+	        <!-- 商品画像 -->
+	        <div class="col-md-4 text-center">
+	            <img th:if="${product.image}"
+	                 th:src="@{/images/__${product.image}__}"
+	                 class="img-fluid rounded shadow-sm springcart-image"
+	                 alt="商品画像">
+	            <img th:unless="${product.image}"
+	                 src="/images/no-image.jpg"
+	                 class="img-fluid rounded shadow-sm springcart-image"
+	                 alt="画像なし">
+	        </div>
+
+	        <!-- 商品情報 -->
+	        <div class="col-md-5">
+	            <h2 class="fw-bold mb-3" th:text="${product.name}"></h2>
+	            <p class="text-muted" th:text="${product.description}"></p>
+	        </div>
+			<div class="col-md-3">
+				<div th:if="${stock >= 1}">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${'\' + #numbers.formatInteger(product.price, 1, 'COMMA')}"></h5>
+
+							<!-- 在庫数表示 -->
+							<p class="text-muted mb-1"><span th:text="${'残り：' + product.stock}"></span></p>
+
+							<!-- 数量ドロップダウン -->
+							<div class="dropdown mb-3">
+								<input type="text"
+								       class="form-control dropdown-toggle"
+								       id="dropdownInput"
+								       data-bs-toggle="dropdown"
+								       placeholder="数量を選択"
+									   th:field="${addToCartForm.amount}"
+								       readonly>
+								<ul class="dropdown-menu w-100">
+									<li th:each="i : ${#numbers.sequence(1, stock)}">
+										<a class="dropdown-item js-dropdown-item" th:data-value="${i}" th:text="${i}"></a>
+									</li>
+								</ul>
+							</div>
+
+							<!-- カートに入れるボタン -->
+							<div class="d-grid">
+								<input type="hidden" th:field="${addToCartForm.id}">
+								<input type="hidden" th:field="${addToCartForm.price}">
+								<button type="submit" class="btn btn-primary" th:action="@{/product/addToCart}">
+									カートに入れる
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 在庫がない場合 -->
+				<div th:if="${stock == 0}">
+					<div class="alert alert-warning text-center" role="alert">
+						現在在庫がありません
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!--JS-->
 	<div th:replace="~{fragment :: js}"></div>
+	<script th:src="@{/js/dropdown.js}"></script>
 </body>
 </html>

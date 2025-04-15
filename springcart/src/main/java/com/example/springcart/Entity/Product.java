@@ -39,6 +39,9 @@ public class Product {
 	@Column(name = "price")
 	private Integer price;
 
+	@Column(name = "stock")
+	private Integer stock;
+
 	@Column(name = "created_date", insertable = false, updatable = false)
 	private Timestamp createdDate;
 

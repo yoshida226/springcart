@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: style}"></div>
+
+<title>カート</title>
+</head>
+<body>
+	<!--ヘッダー-->
+	<div th:replace="~{fragment :: header}"></div>
+	
+	<!-- メインコンテンツ -->
+	<div class="container mt-5 springcart-container">
+	    <!-- 商品リスト（左） -->
+		<div class="col-md-8">
+			<div class="springcart-product-list">
+				<div class="springcart-product-row">
+				        <img src="https://via.placeholder.com/100" alt="商品1" class="springcart-product-image" />
+				        <div class="springcart-product-info">
+				          <h5 class="mb-1">商品1</h5>
+				          <p class="mb-1">価格: ¥1,500</p>
+				          <p class="mb-0">数量: 1</p>
+				        </div>
+				      </div>
+			</div>
+		</div>
+		<!-- 合計・注文確認（右） -->
+		<div class="col-md-4">
+			<div class="springcart-summary">
+			      <h4>注文内容</h4>
+			      <div class="springcart-total">
+			        合計金額: ¥8,500
+			      </div>
+			      <button class="springcart-btn">注文確認</button>
+			</div>
+		</div>
+	    
+	
+	<!--JS-->
+	<div th:replace="~{fragment :: js}"></div>
+	
+	<!--フッター-->
+	<div th:replace="~{fragment :: footer}"></div>
+</body>
+</html>

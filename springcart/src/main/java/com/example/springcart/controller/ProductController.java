@@ -8,30 +8,31 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springcart.Entity.Product;
+import com.example.springcart.Entity.User;
 import com.example.springcart.form.AddToCartForm;
 import com.example.springcart.repository.ProductRepository;
-import com.example.springcart.service.AddToCartService;
+import com.example.springcart.repository.UserRepository;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	
-	private ProductRepository productRepositoty;
-	private AddToCartService addToCartService;
+	private final ProductRepository productRepositoty;
+	private final UserRepository userRepositoty;
 	
-	public ProductController(ProductRepository productRepositoty, AddToCartService addToCartService) {
+	public ProductController(ProductRepository productRepositoty, UserRepository userRepositoty) {
 		this.productRepositoty = productRepositoty;
-		this.addToCartService = addToCartService;
+		this.userRepositoty = userRepositoty;
 	}
 
 	@GetMapping("/list")
@@ -80,6 +81,7 @@ public class ProductController {
 	@GetMapping("/{id}")
 	public String displaytDetail(
 		@PathVariable Integer id,
+		@AuthenticationPrincipal UserDetails userDetails,
 		Model model
 	) {
 		
@@ -90,18 +92,24 @@ public class ProductController {
         	stock = 5;
         }
         
-        AddToCartForm addToCartForm = new AddToCartForm(product.getId(), 0, product.getPrice());
+     // モデルにすでにaddToCartFormが含まれているか確認（リダイレクトからの場合）
+        if (!model.containsAttribute("addToCartForm")) {
+        	//新しくフォームを作成する
+	        AddToCartForm addToCartForm;
+	        if(userDetails != null) {
+		        //ログインユーザの情報を取得し、フォームに設定する（未ログイン時はユーザ情報はnull）
+	            Optional<User> user = userRepositoty.findByEmail(userDetails.getUsername());
+	            addToCartForm = new AddToCartForm(product, user.get(), null);
+	        } else {
+	        	addToCartForm = new AddToCartForm(product, null, null);
+	        }
+	        model.addAttribute("addToCartForm", addToCartForm);
+        }
         
         model.addAttribute("product", product);
         model.addAttribute("stock", stock);
-        model.addAttribute("addToCartForm", addToCartForm);
+        
 		return "product/detail";
 	}
-	
-	@GetMapping("/addToCart")
-	public String addToCart(@ModelAttribute @Validated AddToCartForm addToCartForm, Model model) {
-		Integer calculatedResult = addToCartService.calculatePrice(addToCartForm.getPrice(), addToCartForm.getAmount());
-		
-		return "order/cart";
-	}
+
 }

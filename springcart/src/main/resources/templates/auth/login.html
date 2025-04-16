@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: style}"></div>
+	<title>ログイン</title>
+</head>
+<body>
+	<div th:replace="~{fragment :: header}"></div>
+    <div class="container">
+        <!-- ログインフォーム -->
+        <div class="springcart-form-container">
+            <h2 class="springcart-form-title">ログイン</h2>
+            <form th:action="@{/login}" method="post">
+                <!-- メールアドレス -->
+                <div class="springcart-form-group">
+                    <label for="username">メールアドレス</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="メールアドレスを入力">
+                </div>
+                <!-- パスワード -->
+                <div class="springcart-form-group">
+                    <label for="password">パスワード</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力">
+                </div>
+                <!-- ログインボタン -->
+                <button type="submit" class="btn btn-primary">ログイン</button>
+                <!-- ログイン失敗・成功メッセージ -->
+                <div th:if="${param.error}" class="text-danger mt-3">ログインに失敗しました</div>
+                <div th:if="${param.logout}" class="text-success mt-3">ログアウトしました</div>
+            </form>
+            <!-- 会員登録リンク -->
+            <div class="springcart-register-link">
+                <p>まだ会員ではありませんか？ <a th:href="@{/register}">会員登録はこちら</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- BootstrapのJSを読み込み -->
+    <div th:replace="~{fragment :: js}"></div>
+
+	<!--フッター-->
+	<div th:replace="~{fragment :: footer}"></div>
+</body>
+</html>

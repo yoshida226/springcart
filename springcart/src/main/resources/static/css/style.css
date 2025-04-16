@@ -28,3 +28,92 @@ h1 {
     max-height: 300px;
     object-fit: contain;
 }
+
+.springcart-form-container {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.springcart-form-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.springcart-form-group {
+    margin-bottom: 15px;
+}
+
+.springcart-btn-primary {
+    width: 100%;
+}
+
+.springcart-register-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.springcart-register-link a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.springcart-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.springcart-product-list {
+  flex: 0 0 75%;
+}
+
+.springcart-summary {
+  flex: 0 0 25%;
+  border: 1px solid #ddd;
+padding: 15px;
+margin-bottom: 20px;
+border-radius: 8px;
+}
+
+.springcart-product-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.springcart-product-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.springcart-product-info {
+  flex-grow: 1;
+}
+
+.springcart-total {
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.springcart-btn {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.springcart-btn:hover {
+  background-color: #0056b3;
+}

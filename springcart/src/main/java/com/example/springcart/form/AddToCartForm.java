@@ -3,6 +3,9 @@ package com.example.springcart.form;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import com.example.springcart.Entity.Product;
+import com.example.springcart.Entity.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,10 +14,10 @@ import lombok.Data;
 public class AddToCartForm {
 
 	@NotNull
-	private Integer id;
+	private Product productId;
 	
-	@Min(value = 1, message = "1つ以上の数をせんたくしてください")
-	private Integer amount;
+	private User userId;
 	
-	private Integer price;
+	@Min(value = 1, message = "1つ以上の個数を選択してください")
+	private Integer quantity;
 }

@@ -6,6 +6,37 @@ h1 {
   font-style: normal;
 }
 
+/* ヘッダーのブランド */
+.navbar-brand {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* ドロップダウン */
+.dropdown-menu {
+  min-width: 180px;
+  font-size: 0.9rem;
+}
+
+/* 検索フォームボタン */
+.btn-outline-light {
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.springcart-dropdown-menu {
+  position: absolute !important;
+  right: 0;
+  top: 100%;
+  z-index: 1000;
+}
+
 .logo-black-link {
     color: #212529 !important; /* Bootstrapの黒色を使用 */
     text-decoration: none;     /* 下線を消す */
@@ -86,7 +117,7 @@ border-radius: 8px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.springcart-product-image {
+.springcart-cart-image {
   width: 100px;
   height: 100px;
   object-fit: cover;

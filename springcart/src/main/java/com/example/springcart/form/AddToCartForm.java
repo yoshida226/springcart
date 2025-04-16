@@ -1,6 +1,5 @@
 package com.example.springcart.form;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import com.example.springcart.Entity.Product;
@@ -18,6 +17,6 @@ public class AddToCartForm {
 	
 	private User userId;
 	
-	@Min(value = 1, message = "1つ以上の個数を選択してください")
+	@NotNull(message = "1以上の値を選択してください")
 	private Integer quantity;
 }

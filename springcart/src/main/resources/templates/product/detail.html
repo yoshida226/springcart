@@ -6,7 +6,7 @@
 
 <title>検索結果</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<div th:replace="~{fragment :: header}"></div>
 	
 	<nav class="navbar navbar-expand-lg navbar-light">
@@ -68,7 +68,6 @@
 											<a class="dropdown-item js-dropdown-item" th:data-value="${i}" th:text="${i}"></a>
 										</li>
 									</ul>
-<!--									<input type="hidden" th:field="*{quantity}" id="hiddenQuantity">-->
 									<div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" style="color: red;">
 						                エラーメッセージ
 						            </div>

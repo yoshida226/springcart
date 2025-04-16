@@ -6,35 +6,49 @@
 
 <title>カート</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<!--ヘッダー-->
 	<div th:replace="~{fragment :: header}"></div>
 	
 	<!-- メインコンテンツ -->
-	<div class="container mt-5 springcart-container">
-	    <!-- 商品リスト（左） -->
-		<div class="col-md-8">
-			<div class="springcart-product-list">
-				<div class="springcart-product-row">
-				        <img src="https://via.placeholder.com/100" alt="商品1" class="springcart-product-image" />
-				        <div class="springcart-product-info">
-				          <h5 class="mb-1">商品1</h5>
-				          <p class="mb-1">価格: ¥1,500</p>
-				          <p class="mb-0">数量: 1</p>
-				        </div>
-				      </div>
+	<div class="container mt-5">
+	  <div class="row">
+	    <!-- 商品リスト（左、小さい画面では上） -->
+	    <div class="col-md-8 mb-4">
+	    	<div class="springcart-product-list" th:if="${!isEmpty}">
+	        	<div class="springcart-product-row" th:each="item : ${cartItem}">
+					<img th:if="${item.productId.image}"
+		                 th:src="@{/images/__${item.productId.image}__}"
+		                 class="img-fluid rounded shadow-sm springcart-cart-image"
+		                 alt="商品画像">
+		            <img th:unless="${item.productId.image}"
+		                 src="/images/no-image.jpg"
+		                 class="img-fluid rounded shadow-sm springcart-cart-image"
+		                 alt="画像なし">
+	        		<div class="springcart-product-info">
+		            	<h5 class="mb-1" th:text="${item.productId.name}"></h5>
+		            	<p class="mb-1" th:text="${'価格: ¥' +  #numbers.formatInteger((item.productId.price * item.quantity), 1, 'COMMA')}">1,500</p>
+		            	<p class="mb-0" th:text="${'数量: ' + item.quantity}">1</p>
+	        		</div>
+	        	</div>
+	    	</div>
+			<div th:if="${isEmpty}">
+				<h3 class="col-md-8 mb-4">カートは空です</h3>
 			</div>
-		</div>
-		<!-- 合計・注文確認（右） -->
+	    </div>
+		<!-- 合計・注文確認（右、小さい画面では下） -->
 		<div class="col-md-4">
-			<div class="springcart-summary">
-			      <h4>注文内容</h4>
-			      <div class="springcart-total">
-			        合計金額: ¥8,500
-			      </div>
-			      <button class="springcart-btn">注文確認</button>
+		    <div class="springcart-summary">
+		        <h4>注文内容</h4>
+		        <div class="springcart-total">
+		          合計金額: ¥8,500
+		        </div>
+		        	<button class="springcart-btn">注文確認</button>
+		    	</div>
 			</div>
 		</div>
+	</div>
+	    
 	    
 	
 	<!--JS-->

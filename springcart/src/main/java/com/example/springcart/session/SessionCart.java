@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.example.springcart.form.AddToCartForm;
 
 @Component
-@SessionScope
 public class SessionCart {
 	private List<SessionCartItem> items = new ArrayList<>();
 	

@@ -8,6 +8,19 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 	<div th:replace="~{fragment :: header}"></div>
+	
+<!--	<div class="category-grid">-->
+<!--        <div class="category" th:each="category : ${categories}">-->
+<!--            <h2 th:text="${category.name}">カテゴリー名</h2>-->
+<!--            <div class="product-grid">-->
+<!--                <div class="product" th:each="product : ${category.products}">-->
+<!--                    <img th:src="@{${product.imageUrl}}" alt="商品画像">-->
+<!--                    <p th:text="${product.name}">商品名</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+	
 	<div th:replace="~{fragment :: js}"></div>
 	<div th:replace="~{fragment :: footer}"></div>
 </body>

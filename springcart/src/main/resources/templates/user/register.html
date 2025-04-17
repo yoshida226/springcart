@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: style}"></div>
+
+<title>ホーム</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+	<div class="container">
+        <div class="springcart-user-register-container">
+            <h2 class="springcart-user-register-title text-center">会員登録</h2>
+            <form th:action="@{/user/register}" method="post" th:object="userRegisterForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">名前</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="名前を入力" th:field="*{name}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">メールアドレス</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="メールアドレスを入力" th:field="*{email}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">パスワード</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力" th:field="*{password}" required>
+                </div>
+				<div class="mb-3">
+				    <label for="password" class="form-label">パスワード確認</label>
+				    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力" th:field="*{passwordConfirmation}" required>
+				</div>
+                <button type="submit" class="btn btn-primary w-100">登録</button>
+            </form>
+            <div class="text-center mt-3">
+                <p>すでに会員ですか？ <a th:href="@{/login}">ログインはこちら</a></p>
+            </div>
+        </div>
+    </div>
+	
+	<div th:replace="~{fragment :: js}"></div>
+	<div th:replace="~{fragment :: footer}"></div>
+</body>
+</html>

@@ -27,8 +27,8 @@
 		                 alt="画像なし">
 	        		<div class="springcart-product-info">
 		            	<h5 class="mb-1" th:text="${item.productId.name}"></h5>
-		            	<p class="mb-1" th:text="${'価格: ¥' +  #numbers.formatInteger((item.productId.price * item.quantity), 1, 'COMMA')}">1,500</p>
-		            	<p class="mb-0" th:text="${'数量: ' + item.quantity}">1</p>
+		            	<p class="mb-1" th:text="${'価格: ¥' +  #numbers.formatInteger((item.productId.price * item.quantity), 1, 'COMMA')}"></p>
+		            	<p class="mb-0" th:text="${'数量: ' + item.quantity}"></p>
 	        		</div>
 	        	</div>
 	    	</div>
@@ -40,8 +40,7 @@
 		<div class="col-md-4">
 		    <div class="springcart-summary">
 		        <h4>注文内容</h4>
-		        <div class="springcart-total">
-		          合計金額: ¥8,500
+		        <div class="springcart-total" th:text="${'合計金額: ¥' + #numbers.formatInteger(totalAmount, 1, 'COMMA')}">
 		        </div>
 		        	<button class="springcart-btn">注文確認</button>
 		    	</div>

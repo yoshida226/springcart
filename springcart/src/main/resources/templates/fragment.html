@@ -17,7 +17,8 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-	
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+		
 		<!--css-->
 		<link th:href="@{/css/style.css}" rel="stylesheet" >
 	</div>
@@ -30,7 +31,6 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
 		  <div class="container-fluid">
 		    <a class="navbar-brand fw-bold fs-4" th:href="@{/}">SpringCart</a>
-<!--		    <div class="collapse navbar-collapse">-->
 		      <form class="d-flex ms-auto me-3" th:action="@{/product/list}" method="get">
 		        <input class="form-control me-2" type="search" name="keyword" placeholder="商品を検索" aria-label="Search">
 		        <button class="btn btn-outline-light" type="submit">
@@ -46,75 +46,19 @@
 			          <ul class="dropdown-menu dropdown-menu-end springcart-dropdown-menu">
 			            <li><a class="dropdown-item" th:href="@{/order/cart}">カート</a></li>
 			            <li sec:authorize="isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/register}">会員情報</a></li>
-			            <li sec:authorize="hasRole('ROLE_ADMIN')"><a class="dropdown-item" href="#">商品登録</a></li>
+			            <li sec:authorize="hasRole('ROLE_Admin')"><a class="dropdown-item" href="#">商品登録</a></li>
 			            <li sec:authorize="!isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/login}">ログイン</a></li>
-			            <li sec:authorize="isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/login?logout}">ログアウト</a></li>
+						<li sec:authorize="isAuthenticated()">
+						    <form th:action="@{/logout}" method="post" style="display:inline;">
+						        <button type="submit" class="dropdown-item bg-white border-0 text-start">ログアウト</button>
+						    </form>
+						</li>
 			          </ul>
 			        </li>
 			      </ul>
 			  </div>
-<!--		    </div>-->
 		  </div>
 		</nav>
-<!--		<nav>-->
-<!--			<div class="container-fluid bg-secondary">-->
-<!--				<div class="row">-->
-<!--					<div class="col-md-2">-->
-<!--				        <div class="p-1">-->
-<!--				            <a th:href="@{/}" class="link-light link-opacity-100-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover text-decoration-none">-->
-<!--								<h1>SpringCart</h1>-->
-<!--				            </a>-->
-<!--				        </div>-->
-<!--					</div>-->
-<!--					<div class="col-md-2"></div>-->
-<!--					<div class="col-md-4 p-3">-->
-<!--						<form th:action="@{/product/list}" method="get">-->
-<!--							<div class="input-group">-->
-<!--								<input type="text" name="keyword" class="form-control" placeholder="キーワードを入力">-->
-<!--								<button class="btn btn-primary" type="submit" >-->
-<!--									<i>-->
-<!--										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">-->
-<!--											<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>-->
-<!--										</svg>-->
-<!--									</i>-->
-<!--									検索-->
-<!--								</button>-->
-<!--							</div>-->
-<!--						</form>-->
-<!--					</div>-->
-<!--					<div class="col-md-3"></div>-->
-<!--					<div class="col-md-1">-->
-<!--						<div class="p-3">-->
-<!--							<div class="dropdown">-->
-<!--								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">-->
-<!--									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">-->
-<!--									  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>-->
-<!--									  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>-->
-<!--									</svg>-->
-<!--								</a>-->
-<!--								<ul class="dropdown-menu">-->
-<!--									<li>-->
-<!--										<a class="dropdown-item" th:href="@{/order/cart}">カート</a>-->
-<!--									</li>-->
-<!--									<li sec:authorize="isAuthenticated()">-->
-<!--										<a class="dropdown-item" th:href="@{/auth/register}">会員情報</a>-->
-<!--									</li>-->
-<!--									<li sec:authorize="hasRole('ROLE_ADMIN')">>-->
-<!--										<a class="dropdown-item" href="#">商品登録</a>-->
-<!--									</li>-->
-<!--									<li sec:authorize="!isAuthenticated()">-->
-<!--										<a class="dropdown-item" th:href="@{/auth/login}">ログイン</a>-->
-<!--									</li>-->
-<!--									<li sec:authorize="isAuthenticated()">-->
-<!--										<a class="dropdown-item" th:href="@{/auth/login?logout}">ログアウト</a>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--							</div>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</nav>-->
 	</div>
 	
 	<!--JS-->

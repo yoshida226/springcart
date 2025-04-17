@@ -1,5 +1,8 @@
 package com.example.springcart.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.ObjectFactory;
@@ -15,6 +18,7 @@ import com.example.springcart.repository.CartRepository;
 import com.example.springcart.repository.ProductRepository;
 import com.example.springcart.repository.UserRepository;
 import com.example.springcart.session.SessionCart;
+import com.example.springcart.session.SessionCartItem;
 
 @Service
 public class CartService {
@@ -52,4 +56,27 @@ public class CartService {
 	        cartRepository.save(cart);
 	    }
 	}
+	
+	//カートの合計金額を計算
+	public Integer calculateTotalAmount(List<SessionCartItem> sessionCartItem, List<Cart> cart) {
+		
+		List<Integer> prices = new ArrayList<>();
+		
+		if(sessionCartItem != null && !sessionCartItem.isEmpty()) {
+			for(SessionCartItem s : sessionCartItem) {
+				prices.add(( s.getProductId().getPrice() * s.getQuantity() ));
+			}
+ 		} else if(cart != null && !cart.isEmpty()) {
+ 			for(Cart c : cart) {
+ 				prices.add(( c.getProductId().getPrice() * c.getQuantity() ));
+			}
+ 		} else {
+ 			prices.add(0);
+ 		}
+		
+		Integer sum = prices.stream().mapToInt(Integer::intValue).sum();
+		
+		return sum;
+	}
+
 }

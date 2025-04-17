@@ -66,25 +66,30 @@ public class CartController {
 	public String showCart(Authentication auth,
 						   HttpSession session,
 						   Model model) {
-
-
+		
         if(auth == null || !auth.isAuthenticated()) {
+        	//未ログイン時はセッションカートに保存
         	SessionCart sessionCart = (SessionCart) session.getAttribute("sessionCart");
         	
         	if(sessionCart != null) {
-            	List<SessionCartItem> sessionCartItem = sessionCart.getItems();
-        		model.addAttribute("cartItem", sessionCartItem);
-        		model.addAttribute("isEmpty", sessionCartItem.isEmpty());
+            	List<SessionCartItem> sessionCartItems = sessionCart.getItems();
+        		model.addAttribute("cartItem", sessionCartItems);
+        		model.addAttribute("totalAmount", cartService.calculateTotalAmount(sessionCartItems, null));
+        		model.addAttribute("isEmpty", sessionCartItems.isEmpty());
         	} else {
         		model.addAttribute("cartItem", new SessionCart());
+        		model.addAttribute("totalAmount", 0);
         		model.addAttribute("isEmpty", true);
         	}
         	
         } else {
         	//ログイン時はカートテーブルからカートの商品を取得
         	User user = userRepository.findByEmail(auth.getName()).orElseThrow();
-        	List<Cart> cart = cartRepository.findByUserId(user);
-        	model.addAttribute("cartItem", cart);
+        	List<Cart> carts = cartRepository.findByUserId(user);
+        
+        	model.addAttribute("cartItem", carts);
+    		model.addAttribute("totalAmount", cartService.calculateTotalAmount(null, carts));
+        	model.addAttribute("isEmpty", carts.isEmpty());
         }
 		
 		return "order/cart";

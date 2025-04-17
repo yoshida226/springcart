@@ -1,9 +1,17 @@
 @charset "UTF-8";
 
+body {
+    font-family: 'Inter', 'Noto Sans JP', sans-serif;
+}
+
 h1 {
   font-family: "Prompt", sans-serif;
   font-weight: 900;
   font-style: normal;
+}
+
+a {
+	text-decoration: none;
 }
 
 /* ヘッダーのブランド */
@@ -98,6 +106,71 @@ h1 {
   gap: 2rem;
 }
 
+.springcart-home-category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 1100px;
+    padding: 0 20px;
+}
+
+springcart-home-.category {
+	background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.springcart-home-category h3 {
+	font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.springcart-home-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.springcart-home-product {
+	background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+.springcart-home-product:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.springcart-home-product img {
+	width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.springcart-home-product p {
+	font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+
 .springcart-product-list {
   flex: 0 0 75%;
 }
@@ -147,4 +220,17 @@ border-radius: 8px;
 
 .springcart-btn:hover {
   background-color: #0056b3;
+}
+
+.springcart-user-register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.springcart-user-register-title {
+    font-size: 24px;
+    margin-bottom: 20px;
 }

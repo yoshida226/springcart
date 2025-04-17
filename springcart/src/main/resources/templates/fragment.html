@@ -45,7 +45,7 @@
 			          </a>
 			          <ul class="dropdown-menu dropdown-menu-end springcart-dropdown-menu">
 			            <li><a class="dropdown-item" th:href="@{/order/cart}">カート</a></li>
-			            <li sec:authorize="isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/register}">会員情報</a></li>
+			            <li sec:authorize="!isAuthenticated()"><a class="dropdown-item" th:href="@{/user/register}">会員情報</a></li>
 			            <li sec:authorize="hasRole('ROLE_Admin')"><a class="dropdown-item" href="#">商品登録</a></li>
 			            <li sec:authorize="!isAuthenticated()"><a class="dropdown-item" th:href="@{/auth/login}">ログイン</a></li>
 						<li sec:authorize="isAuthenticated()">

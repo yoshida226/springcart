@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserResisterForm {
+public class UserRegisterForm {
 	
 	@NotEmpty(message = "名前は必須です")
 	private String name;

@@ -34,10 +34,13 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
+
+	@Column(name = "enabled")
+	private Boolean enabled;
 	
-	@Column(name = "created_date")
+	@Column(name = "created_date", insertable = false, updatable = false)
 	private Timestamp createdDate;
 	
-	@Column(name = "updated_date")
+	@Column(name = "updated_date", insertable = false, updatable = false)
 	private Timestamp updatedDate;
 }

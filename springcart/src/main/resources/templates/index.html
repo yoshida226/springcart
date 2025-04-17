@@ -9,6 +9,10 @@
 <body class="d-flex flex-column min-vh-100">
 	<div th:replace="~{fragment :: header}"></div>
 	
+	<div class="container pt-3">
+		<div class="alert alert-success" role="alert" th:if="${successMessage}" th:text="${successMessage}"></div>
+	</div>
+	
 	<div class="springcart-home-category-grid">
         <div class="springcart-home-category" th:each="category : ${categories}">
             <h3 th:text="${category.name}">カテゴリー名</h3>

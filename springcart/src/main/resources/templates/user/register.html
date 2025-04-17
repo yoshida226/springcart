@@ -4,34 +4,39 @@
 	<div th:replace="~{fragment :: meta}"></div>
 	<div th:replace="~{fragment :: style}"></div>
 
-<title>ホーム</title>
+<title>会員登録</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
 	<div class="container">
         <div class="springcart-user-register-container">
             <h2 class="springcart-user-register-title text-center">会員登録</h2>
-            <form th:action="@{/user/register}" method="post" th:object="userRegisterForm">
+            <form th:action="@{/user/register}" method="post" th:object="${userRegisterForm}">
+			<div class="alert alert-danger" role="alert" th:if="${errorMessage}" th:text="${errorMessage}"></div>
                 <div class="mb-3">
                     <label for="name" class="form-label">名前</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="名前を入力" th:field="*{name}" required>
+					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="名前を入力" th:field="*{name}">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">メールアドレス</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="メールアドレスを入力" th:field="*{email}" required>
+					<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="メールアドレスを入力" th:field="*{email}">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">パスワード</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力" th:field="*{password}" required>
+					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力" th:field="*{password}">
                 </div>
 				<div class="mb-3">
-				    <label for="password" class="form-label">パスワード確認</label>
-				    <input type="password" class="form-control" id="password" name="password" placeholder="パスワードを入力" th:field="*{passwordConfirmation}" required>
+				    <label for="password" class="form-label">確認用パスワード</label>
+					<span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}" class="text-danger"></span>
+				    <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" placeholder="パスワードを入力" th:field="*{passwordConfirmation}">
 				</div>
                 <button type="submit" class="btn btn-primary w-100">登録</button>
             </form>
             <div class="text-center mt-3">
-                <p>すでに会員ですか？ <a th:href="@{/login}">ログインはこちら</a></p>
+                <p>すでに会員ですか？ <a th:href="@{/auth/login}">ログインはこちら</a></p>
             </div>
         </div>
     </div>

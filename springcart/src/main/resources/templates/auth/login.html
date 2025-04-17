@@ -5,7 +5,7 @@
 	<div th:replace="~{fragment :: style}"></div>
 	<title>ログイン</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<div th:replace="~{fragment :: header}"></div>
     <div class="container">
         <!-- ログインフォーム -->
@@ -30,7 +30,7 @@
             </form>
             <!-- 会員登録リンク -->
             <div class="springcart-register-link">
-                <p>まだ会員ではありませんか？ <a th:href="@{/register}">会員登録はこちら</a></p>
+                <p>まだ会員ではありませんか？ <a th:href="@{/user/register}">会員登録はこちら</a></p>
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@ package com.example.springcart.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +23,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // 管理者のみアクセス可能
                 .requestMatchers("/admin/**").hasRole("Admin")
-                .requestMatchers("/", "/auth/login", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**").permitAll()
+                .requestMatchers("/", "/auth/login", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**", "/user/**").permitAll()
                 // それ以外はログイン必須
                 .anyRequest().authenticated()
             )
@@ -44,5 +46,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 }

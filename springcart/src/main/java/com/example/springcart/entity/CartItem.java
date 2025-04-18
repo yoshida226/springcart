@@ -14,9 +14,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "cart_item")
 @Data
-public class Cart {
+public final class CartItem extends BaseCartItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -34,4 +34,9 @@ public class Cart {
 	
 	@Column(name = "added_at", insertable = false, updatable = false)
 	private Timestamp addedAt;
+	
+	public CartItem(Product product, Integer quantity, User userId) {
+		super(product, quantity);
+		this.userId = userId;
+	}
 }

@@ -22,6 +22,9 @@
             </div>
         </div>
     </nav>
+	<div class="container pt-3">
+		<div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+	</div>
 
 	<!-- 詳細 -->
 	<div class="container">

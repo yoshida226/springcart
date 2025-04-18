@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.example.springcart.entity.SessionCartItem;
 import com.example.springcart.form.AddToCartForm;
 
 @Component

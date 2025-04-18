@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.User;
 import com.example.springcart.form.UserRegisterForm;
 import com.example.springcart.repository.RoleRepository;
 import com.example.springcart.repository.UserRepository;

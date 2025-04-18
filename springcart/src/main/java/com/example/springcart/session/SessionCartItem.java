@@ -1,7 +1,7 @@
 package com.example.springcart.session;
 import jakarta.validation.constraints.NotNull;
 
-import com.example.springcart.Entity.Product;
+import com.example.springcart.entity.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

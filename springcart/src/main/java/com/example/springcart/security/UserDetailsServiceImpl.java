@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.User;
 import com.example.springcart.repository.UserRepository;
 
 @Service

@@ -1,4 +1,4 @@
-package com.example.springcart.Entity;
+package com.example.springcart.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

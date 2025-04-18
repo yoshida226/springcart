@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.springcart.Entity.Product;
+import com.example.springcart.entity.Product;
 import com.example.springcart.repository.ProductRepository;
 
 @Controller

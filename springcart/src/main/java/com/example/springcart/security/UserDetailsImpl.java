@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.User;
 
 public class UserDetailsImpl implements UserDetails {
 	private final User user;
@@ -52,6 +52,6 @@ public class UserDetailsImpl implements UserDetails {
 	
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return false;
 	}
 }

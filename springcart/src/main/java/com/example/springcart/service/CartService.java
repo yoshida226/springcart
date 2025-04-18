@@ -10,9 +10,9 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.example.springcart.Entity.Cart;
-import com.example.springcart.Entity.Product;
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.Cart;
+import com.example.springcart.entity.Product;
+import com.example.springcart.entity.User;
 import com.example.springcart.form.AddToCartForm;
 import com.example.springcart.repository.CartRepository;
 import com.example.springcart.repository.ProductRepository;

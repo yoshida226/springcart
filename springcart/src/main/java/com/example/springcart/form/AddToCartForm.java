@@ -2,8 +2,8 @@ package com.example.springcart.form;
 
 import jakarta.validation.constraints.NotNull;
 
-import com.example.springcart.Entity.Product;
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.Product;
+import com.example.springcart.entity.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

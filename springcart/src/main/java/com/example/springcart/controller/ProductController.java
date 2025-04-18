@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.springcart.Entity.Product;
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.Product;
+import com.example.springcart.entity.User;
 import com.example.springcart.form.AddToCartForm;
 import com.example.springcart.repository.ProductRepository;
 import com.example.springcart.repository.UserRepository;

@@ -23,7 +23,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // 管理者のみアクセス可能
                 .requestMatchers("/admin/**").hasRole("Admin")
-                .requestMatchers("/", "/auth/login", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**", "/user/**").permitAll()
+                .requestMatchers("/", "/auth/**", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**", "/user/**").permitAll()
                 // それ以外はログイン必須
                 .anyRequest().authenticated()
             )

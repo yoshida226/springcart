@@ -1,4 +1,4 @@
-package com.example.springcart.Entity;
+package com.example.springcart.entity;
 
 import java.sql.Timestamp;
 

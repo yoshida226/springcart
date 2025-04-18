@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.springcart.Entity.Cart;
-import com.example.springcart.Entity.User;
+import com.example.springcart.entity.Cart;
+import com.example.springcart.entity.User;
 import com.example.springcart.form.AddToCartForm;
 import com.example.springcart.repository.CartRepository;
 import com.example.springcart.repository.UserRepository;

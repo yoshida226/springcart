@@ -3,12 +3,10 @@ package com.example.springcart.entity;
 import lombok.Data;
 
 @Data
-public sealed class BaseCartItem permits CartItem, SessionCartItem {
-	protected Product productId;
-	protected Integer quantity;
+public sealed abstract class BaseCartItem permits CartItem, SessionCartItem {
+	public BaseCartItem() {}
 	
-	public BaseCartItem(Product productId, Integer quantity) {
-		this.productId = productId;
-		this.quantity = quantity;
-	}
+    public abstract Product getProductId();
+    
+    public abstract Integer getQuantity();
 }

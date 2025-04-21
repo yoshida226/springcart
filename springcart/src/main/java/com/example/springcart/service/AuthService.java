@@ -56,6 +56,7 @@ public class AuthService {
 		
 	}
 	
+	//自動ログイン
 	public void autoLogin(User user, HttpServletRequest request) {
 	    UsernamePasswordAuthenticationToken authToken =
             new UsernamePasswordAuthenticationToken(

@@ -35,8 +35,21 @@ public final class CartItem extends BaseCartItem {
 	@Column(name = "added_at", insertable = false, updatable = false)
 	private Timestamp addedAt;
 	
-	public CartItem(Product product, Integer quantity, User userId) {
-		super(product, quantity);
+	public CartItem() {}
+	
+	public CartItem(Product productId, Integer quantity, User userId) {
+		this.productId = productId;
+        this.quantity = quantity;
 		this.userId = userId;
 	}
+	
+	@Override
+    public Product getProductId() {
+        return this.productId;  // フィールド名を変更しない場合
+    }
+    
+    @Override
+    public Integer getQuantity() {
+        return this.quantity;
+    }
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注文履歴</title>
+    <div th:replace="~{fragment :: meta}"></div>
+    <div th:replace="~{fragment :: style}"></div>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragment :: header}"></div>
+
+<div class="container mt-5">
+    <h2>注文履歴</h2>
+
+    <div th:if="${#lists.isEmpty(orders)}">
+        <p>注文履歴がありません。</p>
+    </div>
+
+    <div th:each="order : ${orders}" class="mb-5 p-3 border rounded">
+        <h5 th:text="${'注文日時: ' + #dates.format(order.createdAt, 'yyyy/MM/dd HH:mm')}"></h5>
+        <p th:text="${'合計金額: ¥' + #numbers.formatInteger(order.totalPrice, 1, 'COMMA')}"></p>
+
+        <div th:each="detail : ${order.orderDetails}" class="mt-3">
+            <div class="d-flex align-items-center mb-2">
+                <img th:if="${detail.product.image}"
+                     th:src="@{/images/__${detail.product.image}__}"
+                     class="img-thumbnail me-3" style="width: 100px;">
+                <img th:unless="${detail.product.image}"
+                     src="/images/no-image.jpg"
+                     class="img-thumbnail me-3" style="width: 100px;">
+                <div>
+                    <p th:text="${detail.product.name}"></p>
+                    <p th:text="${'数量: ' + detail.quantity}"></p>
+                    <p th:text="${'小計: ¥' + #numbers.formatInteger(detail.subtotal, 1, 'COMMA')}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment :: footer}"></div>
+<div th:replace="~{fragment :: js}"></div>
+</body>
+</html>

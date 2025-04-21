@@ -1,4 +1,4 @@
-package com.example.springcart.session;
+package com.example.springcart.dto;
 
 import java.util.ArrayList;
 import java.util.List;

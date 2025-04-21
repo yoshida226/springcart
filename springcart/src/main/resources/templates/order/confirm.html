@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	<div th:replace="~{fragment :: meta}"></div>
+	<div th:replace="~{fragment :: style}"></div>
 
+<title>注文確認</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+	<!--ヘッダー-->
+	<div th:replace="~{fragment :: header}"></div>
+	
+	<!-- メインコンテンツ -->
+	<div class="container mt-5">
+	  <div class="row">
+	    <!-- 商品リスト（左、小さい画面では上） -->
+	    <div class="col-md-8 mb-4">
+        	<div class="springcart-product-row" th:each="orderConfirmForm : ${orderConfirmForms}">
+				<img th:if="${orderConfirmForm.productId.image}"
+	                 th:src="@{/images/__${orderConfirmForm.productId.image}__}"
+	                 class="img-fluid rounded shadow-sm springcart-cart-image"
+	                 alt="商品画像">
+	            <img th:unless="${orderConfirmForm.productId.image}"
+	                 src="/images/no-image.jpg"
+	                 class="img-fluid rounded shadow-sm springcart-cart-image"
+	                 alt="画像なし">
+        		<div class="springcart-product-info">
+	            	<h5 class="mb-1" th:text="${orderConfirmForm.productId.name}"></h5>
+	            	<p class="mb-1" th:text="${'価格: ¥' +  #numbers.formatInteger(orderConfirmForm.productId.price, 1, 'COMMA')}"></p>
+	            	<p class="mb-0" th:text="${'数量: ' + orderConfirmForm.quantity}"></p>
+        		</div>
+        	</div>
+	    </div>
+		<!-- 合計・注文確認（右、小さい画面では下） -->
+		<div class="col-md-4">
+		    <div class="springcart-summary">
+		        <h4>注文内容</h4>
+		        <div class="springcart-total" th:text="${'合計金額: ¥' + #numbers.formatInteger(totalPrice, 1, 'COMMA')}">
+		        </div>
+				<div>
+					<form th:action="@{/order/complete}" method="post">
+					    <button class="springcart-btn" type="submit">注文確定</button>
+					</form>
+		    	</div>
+			</div>
+		</div>
+	</div>
+	<!--JS-->
+	<div th:replace="~{fragment :: js}"></div>
+	
+	<!--フッター-->
+	<div th:replace="~{fragment :: footer}"></div>
 </body>
 </html>

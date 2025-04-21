@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,31 +13,62 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.springcart.entity.CartItem;
-import com.example.springcart.entity.SessionCartItem;
-import com.example.springcart.entity.User;
+import com.example.springcart.dto.SessionCart;
+import com.example.springcart.entity.BaseCartItem;
 import com.example.springcart.form.AddToCartForm;
 import com.example.springcart.repository.CartItemRepository;
 import com.example.springcart.repository.UserRepository;
 import com.example.springcart.service.CartService;
-import com.example.springcart.session.SessionCart;
+import com.example.springcart.service.helper.CartHelperService;
+import com.example.springcart.util.AuthUtil;
 
 @Controller
+@RequestMapping("/order/cart")
 public class CartController {
-	private final CartService cartService;
-	private final UserRepository userRepository;
-	private final CartItemRepository cartItemRepository;
 	
-	public CartController(CartService cartService, UserRepository userRepository, CartItemRepository cartItemRepository) {
-		this.cartService = cartService;
-		this.userRepository = userRepository;
-		this.cartItemRepository = cartItemRepository;
+	@Autowired
+	private CartService cartService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private CartItemRepository cartItemRepository;
+	
+	@Autowired
+	private AuthUtil authUtil;
+	
+	@Autowired
+	private CartHelperService cartHelperService;
+	
+	//カートを表示
+	@GetMapping
+	public String showCart(Authentication auth,
+						   HttpSession session,
+						   Model model) {
+		
+		List<? extends BaseCartItem> cartItems = cartService.getCartItems(auth, session);
+		
+        if(cartItems != null) {
+        	model.addAttribute("isEmpty", cartItems.isEmpty());
+        	model.addAttribute("cartItem", cartItems);
+    		model.addAttribute("totalPrice", cartHelperService.calculateTotalPrice(cartItems));
+        } else {
+    		model.addAttribute("isEmpty", true);
+    		model.addAttribute("cartItem", new SessionCart());
+    		model.addAttribute("totalPrice", 0);
+        }
+		
+		return "order/cart";
 	}
 	
-	@PostMapping("/order/cart")
+	//カートに入れる
+	@PostMapping
 	public String addToCart(@ModelAttribute @Validated AddToCartForm addToCartForm,
 			 				BindingResult result,
 			 				RedirectAttributes redirectAttributes,
@@ -68,41 +100,17 @@ public class CartController {
 		return "redirect:/order/cart";
 	}
 	
-	@GetMapping("/order/cart")
-	public String showCart(Authentication auth,
-						   HttpSession session,
-						   Model model) {
+	//カートから商品を削除
+	@PostMapping("/remove/{productId}")
+	public String removeItemFromCart(@PathVariable Integer productId,
+									 Authentication auth,
+									 HttpSession session,
+									 RedirectAttributes redirectAttributes) {
 		
-        if(auth == null || !auth.isAuthenticated()) {
-        	//未ログイン時はセッションカートに保存
-        	SessionCart sessionCart = (SessionCart) session.getAttribute("sessionCart");
-        	
-        	
-        	if(sessionCart != null) {
-        		//すでにセッションカートが存在する場合、その中のアイテムを取得
-            	List<SessionCartItem> sessionCartItems = sessionCart.getItems();
-
-        		model.addAttribute("isEmpty", sessionCartItems.isEmpty());
-        		model.addAttribute("cartItem", sessionCartItems);
-        		model.addAttribute("totalAmount", cartService.calculateTotalAmount(sessionCartItems));
-        		
-        	} else {
-        		
-        		model.addAttribute("isEmpty", true);
-        		model.addAttribute("cartItem", new SessionCart());
-        		model.addAttribute("totalAmount", 0);
-        	}
-        	
-        } else {
-        	//ログイン時はカートテーブルからカートの商品を取得
-        	User user = userRepository.findByEmail(auth.getName()).orElseThrow();
-        	List<CartItem> cartItems = cartItemRepository.findByUserId(user);
-
-        	model.addAttribute("isEmpty", cartItems.isEmpty());
-        	model.addAttribute("cartItem", cartItems);
-    		model.addAttribute("totalAmount", cartService.calculateTotalAmount(cartItems));
-        }
+		cartService.remove(productId, auth, session);
+		redirectAttributes.addFlashAttribute("message", "カートからアイテムを削除しました");
 		
-		return "order/cart";
+		return "redirect:/order/cart";
 	}
+	
 }

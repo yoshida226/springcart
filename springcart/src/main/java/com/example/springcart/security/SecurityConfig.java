@@ -16,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	@Autowired
     private UserDetailsServiceImpl userDetailsService;
+	
+    @Autowired
+    private CustomLoginSuccessHandler successHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -23,6 +26,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // 管理者のみアクセス可能
                 .requestMatchers("/admin/**").hasRole("Admin")
+                //すべての人がアクセス可
                 .requestMatchers("/", "/auth/**", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**", "/user/**").permitAll()
                 // それ以外はログイン必須
                 .anyRequest().authenticated()
@@ -30,6 +34,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
+                .successHandler(successHandler)
                 .failureUrl("/auth/login?error=true")
                 .permitAll()
             )
@@ -52,4 +57,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
 }

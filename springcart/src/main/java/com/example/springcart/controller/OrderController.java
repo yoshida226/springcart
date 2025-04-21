@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.springcart.entity.CartItem;
-import com.example.springcart.entity.OrderDetail;
 import com.example.springcart.entity.User;
 import com.example.springcart.form.OrderConfirmForm;
 import com.example.springcart.repository.CartItemRepository;
@@ -91,8 +90,7 @@ public class OrderController {
 	@GetMapping("/history")
 	public String showOrderHistory(Authentication auth, Model model) {
 		
-		User user = authUtil.getUserByAuth(auth);
-		List<OrderDetail> orderDetails = 
+		
 		
 		model.addAttribute("orderDetails", "");
 		

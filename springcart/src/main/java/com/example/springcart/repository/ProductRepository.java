@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.springcart.entity.Product;
+import com.example.springcart.entity.Shop;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -16,5 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public Page<Product> findByCategory(String category, Pageable pageable);
 	public Optional<Product> findById(Integer product);
 	public List<Product> findTop4ByCategoryOrderByCreatedDateDesc(String category);
+	public List<Product> findByShop(Shop shop);
 	
 }

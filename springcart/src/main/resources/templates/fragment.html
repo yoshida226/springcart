@@ -46,7 +46,7 @@
 			          <ul class="dropdown-menu dropdown-menu-end springcart-dropdown-menu">
 			            <li><a class="dropdown-item" th:href="@{/order/cart}">カート</a></li>
 						<li sec:authorize="isAuthenticated()"><a class="dropdown-item" th:href="@{/order/history}">注文履歴</a></li>
-			            <li sec:authorize="hasRole('ROLE_Admin')"><a class="dropdown-item" href="#">商品管理</a></li>
+			            <li sec:authorize="hasRole('ROLE_Admin')"><a class="dropdown-item" th:href="@{/admin/list}">商品管理</a></li>
 						<li sec:authorize="isAuthenticated()">
 						    <form th:action="@{/logout}" method="post" style="display:inline;">
 						        <button type="submit" class="dropdown-item bg-white border-0 text-start">ログアウト</button>

@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.springcart.entity.Shop;
 import com.example.springcart.entity.UserShop;
+import com.example.springcart.entity.UserShopId;
 
 @Repository
-public interface UserShopRepository extends JpaRepository<UserShop, Integer> {
+public interface UserShopRepository extends JpaRepository<UserShop, UserShopId> {
 	@Query("SELECT us.shopId FROM UserShop us WHERE us.userId.id = :userId")
-	List<Shop> findShopsByUserId(@Param("userId") Integer userId);
+	public List<Shop> findShopsByUserId(@Param("userId") Integer userId);
 }

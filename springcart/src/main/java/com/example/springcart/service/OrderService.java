@@ -111,9 +111,9 @@ public class OrderService {
 		});
 	}
 	
-	public List<OrderDetail> getHistory(Authentication auth) {
+	//ユーザの注文履歴を取得する
+	public List<Orders> getHistory(Authentication auth) {
 		User user = authUtil.getUserByAuth(auth);
-		List<orders> orders = ordersRepository.find
-		List<OrderDetail> orderDetails = 
+		return ordersRepository.findByUserIdWithDetails(user.getId());
 	}
 }

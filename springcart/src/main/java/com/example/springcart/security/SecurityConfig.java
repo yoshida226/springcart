@@ -27,7 +27,7 @@ public class SecurityConfig {
                 // 管理者のみアクセス可能
                 .requestMatchers("/admin/**").hasRole("Admin")
                 //すべての人がアクセス可
-                .requestMatchers("/", "/auth/**", "/css/**", "/images/**", "/product/**", "/order/**", "/js/**", "/user/**").permitAll()
+                .requestMatchers("/", "/auth/**", "/css/**", "/images/**", "/product/**", "/order/confirm", "/order/cart", "/js/**", "/user/**").permitAll()
                 // それ以外はログイン必須
                 .anyRequest().authenticated()
             )

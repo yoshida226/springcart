@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.springcart.entity.CartItem;
+import com.example.springcart.entity.Orders;
 import com.example.springcart.entity.User;
 import com.example.springcart.form.OrderConfirmForm;
 import com.example.springcart.repository.CartItemRepository;
@@ -37,9 +38,6 @@ public class OrderController {
 	
 	@Autowired
 	CartItemRepository cartItemRepository;
-	
-	@Autowired
-	CartHelperService cartHelperService;
 	
 	@Autowired
 	CartHelperService cartHelperService;
@@ -84,15 +82,14 @@ public class OrderController {
 		Integer totalPrice = (Integer) session.getAttribute("totalPrice");
 		orderService.completeOrder(orderConfirmForms, totalPrice, auth);
 		
-		return "order/history";
+		return "redirect:/order/history";
 	}
 	
+	//注文履歴閲覧
 	@GetMapping("/history")
 	public String showOrderHistory(Authentication auth, Model model) {
-		
-		
-		
-		model.addAttribute("orderDetails", "");
+		List<Orders> orders = orderService.getHistory(auth);
+		model.addAttribute("orders", orders);
 		
 		return "order/history";
 	}

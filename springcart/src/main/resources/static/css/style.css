@@ -239,3 +239,22 @@ border-radius: 8px;
 .text-danger {
 	font-size: 12px;
 }
+
+.springcart-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.springcart-img-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.springcart-label {
+    font-weight: bold;
+}
+.springcart-save-btn {
+    margin-top: 1rem;
+    float: right;
+}

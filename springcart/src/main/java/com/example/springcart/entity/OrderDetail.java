@@ -34,6 +34,8 @@ public class OrderDetail {
 	@Column(name = "price")
 	Integer price;
 	
+	public OrderDetail() {};
+	
 	public OrderDetail(Orders orderId, Product productId, Integer quantity, Integer price) {
 		this.orderId = orderId;
 		this.productId = productId;

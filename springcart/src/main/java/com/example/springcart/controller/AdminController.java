@@ -1,6 +1,7 @@
 package com.example.springcart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,23 +20,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.springcart.entity.Product;
 import com.example.springcart.entity.Shop;
-import com.example.springcart.entity.User;
+import com.example.springcart.form.ProductConfirmForm;
+import com.example.springcart.form.ProductRegisterForm;
 import com.example.springcart.form.ProductUpdateForm;
 import com.example.springcart.repository.ProductRepository;
 import com.example.springcart.repository.ShopRepository;
-import com.example.springcart.repository.UserShopRepository;
 import com.example.springcart.service.AdminService;
-import com.example.springcart.util.AuthUtil;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
-	@Autowired
-	private AuthUtil authUtil;
-	
-	@Autowired
-	private UserShopRepository userShopRepository;
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -50,13 +44,8 @@ public class AdminController {
 	public String showProductList(@RequestParam(required = false) Integer shopId,
 								  Authentication auth,
 								  Model model) {
-		
-		System.out.println("test1");
-		User user = authUtil.getUserByAuth(auth);
-		System.out.println("test2");
-		List<Shop> shops = userShopRepository.findShopsByUserId(user.getId());
-		
-		System.out.println("test3");
+
+		List<Shop> shops = adminService.getShopsByUser(auth);
 		
 		List<Product> products = new ArrayList<>();
 		if(shopId != null) {
@@ -120,5 +109,53 @@ public class AdminController {
 		return "redirect:/admin/list" + (shopId != null ? ("?shopId=" + shopId) : "");
 	}
 	
+	@GetMapping("/register")
+	public String register(Authentication auth,
+						   Model model) {
+
+		List<String> categories = Arrays.asList("食品", "スポーツ", "日用品・雑貨", "ファッション", "ビューティー", "本", "アウトドア", "楽器");
+		List<Shop> shops = adminService.getShopsByUser(auth);
+
+		model.addAttribute("productForm", new ProductRegisterForm());
+		model.addAttribute("categories", categories);
+		model.addAttribute("shops", shops);
+		
+		return "admin/register";
+	}
 	
+	@PostMapping("/confirm")
+	public String confirmProduct(@ModelAttribute("productForm") ProductRegisterForm productRegisterForm,
+								BindingResult result,
+								Authentication auth,
+								Model model) {
+
+		//バリデーションエラー発生時の処理
+		if(result.hasErrors()) {
+			System.out.println(result);
+			List<String> categories = Arrays.asList("食品", "スポーツ", "日用品・雑貨", "ファッション", "ビューティー", "本", "アウトドア", "楽器");
+			List<Shop> shops = adminService.getShopsByUser(auth);
+
+			model.addAttribute("categories", categories);
+			model.addAttribute("shops", shops);
+			
+			return "admin/register";
+		}
+		
+		ProductConfirmForm productConfirmForm = new ProductConfirmForm(productRegisterForm.getName(),
+																	   productRegisterForm.getCategory(),
+																	   productRegisterForm.getShop(),
+																	   productRegisterForm.getDescription(),
+																	   productRegisterForm.getPrice(),
+																	   productRegisterForm.getStock(),
+																	   productRegisterForm.getImageContent(),
+																	   productRegisterForm.getImageContent().getOriginalFilename());
+		model.addAttribute("productConfirmForm", productConfirmForm);
+		
+		return "admin/confirm";
+	}
+	
+//	@PostMapping("/save")
+//	public String saveProduct() {
+//		
+//	}
 }

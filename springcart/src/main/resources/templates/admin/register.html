@@ -1,15 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <title>商品登録</title>
 	<div th:replace="~{fragment :: meta}"></div>
 	<div th:replace="~{fragment :: style}"></div>
-
-<title>商品登録</title>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="bg-light d-flex flex-column min-vh-100">
 	<div th:replace="~{fragment :: header}"></div>
+	<div class="container mt-5 pb-5">
+	    <div class="springcart-form-section">
+	        <div class="springcart-form-title">商品登録フォーム</div>
+	        <form th:action="@{/admin/confirm}" method="post" enctype="multipart/form-data" th:object="${productForm}">
+	            <div class="mb-3">
+	                <label for="name" class="form-label">商品名</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+	                <input type="text" class="form-control" id="name" th:field="*{name}">
+	            </div>
 	
+	            <div class="mb-3">
+	                <label for="category" class="form-label">カテゴリー</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+	                <select class="form-select" id="category" th:field="*{category}">
+	                    <option value="" hidden th:selected="${productForm.category == null or productForm.category == ''}">選択してください</option>
+	                    <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+	                </select>
+	            </div>
+	
+	            <div class="mb-3">
+	                <label for="shop" class="form-label">ショップ</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('shop')}" th:errors="*{shop}"></span>
+	                <select class="form-select" id="shop" th:field="*{shop}">
+	                    <option value="" hidden  th:if="${productForm.shop == null}" selected>選択してください</option>
+	                    <option th:each="shop : ${shops}" th:value="${shop.id}" th:text="${shop.name}"></option>
+	                </select>
+	            </div>
+	
+	            <div class="mb-3">
+	                <label for="description" class="form-label">商品説明</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+	                <textarea class="form-control" id="description" th:field="*{description}" rows="4"></textarea>
+	            </div>
+	
+	            <div class="mb-3">
+	                <label for="price" class="form-label">金額（円）</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+	                <input type="number" class="form-control" id="price" th:field="*{price}">
+	            </div>
+	
+	            <div class="mb-3">
+	                <label for="stock" class="form-label">在庫数</label>
+					<span class="text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></span>
+	                <input type="number" class="form-control" id="stock" th:field="*{stock}">
+	            </div>
+	
+	            <div class="mb-4 col-md-3">
+	                <label for="image" class="form-label">商品画像</label>
+					<img src="/images/product_001" class="springcart-img-preview mb-3" alt="商品画像">
+	                <input type="file" class="form-control" name="imageContent" id="imageContent" th:field="*{imageContent}">
+	            </div>
+	
+	            <div class="text-center">
+	                <button type="submit" class="btn btn-primary px-5">登録確認</button>
+	            </div>
+	        </form>
+	    </div>
+	</div>
 	<div th:replace="~{fragment :: js}"></div>
+	<script th:src="@{/js/changeImage.js}"></script>
 	<div th:replace="~{fragment :: footer}"></div>
+
 </body>
 </html>

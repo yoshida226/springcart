@@ -272,3 +272,15 @@ border-radius: 8px;
   background-color: #f8f9fa;
   border-color: #dee2e6 #dee2e6 #fff;
 }
+
+.springcart-form-section {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.springcart-form-title {
+    font-size: 1.5rem;
+	font-weight: bold;
+    margin-bottom: 1.5rem;
+}

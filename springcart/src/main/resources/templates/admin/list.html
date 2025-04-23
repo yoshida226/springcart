@@ -13,7 +13,7 @@
 	    <h2>商品管理</h2>
 
 		<div class="d-flex flex-row-reverse">
-		    <a class="btn btn-primary">商品登録</a>
+		    <a class="btn btn-primary" th:href="@{/admin/register}">商品登録</a>
 		</div>
 		
 		<!-- ショップ切り替えタブ -->
@@ -93,7 +93,6 @@
 			                            <input type="number" name="stock" th:value="${form.stock}" class="form-control">
 			                        </div>
 			                    </div>
-	
 			                    <button type="submit" class="btn btn-primary springcart-save-btn">保存</button>
 			                </div>
 			            </div>

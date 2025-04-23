@@ -58,7 +58,6 @@ public class UserController {
 		
 		//基本的な入力チェック
 		if(result.hasErrors()) {
-			System.out.println("エラー情報:" + result);
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterForm", result);
 			redirectAttributes.addFlashAttribute("userRegisterForm", userRegisterForm);
 			

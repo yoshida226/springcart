@@ -5,21 +5,40 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.springcart.entity.Product;
+import com.example.springcart.entity.Shop;
+import com.example.springcart.entity.User;
 import com.example.springcart.form.ProductUpdateForm;
 import com.example.springcart.repository.ProductRepository;
+import com.example.springcart.repository.UserShopRepository;
+import com.example.springcart.util.AuthUtil;
 
 @Service
 public class AdminService {
 	
 	@Autowired
+	private AuthUtil authUtil;
+	
+	@Autowired
+	private UserShopRepository userShopRepository;
+	
+	@Autowired
 	ProductRepository productRepository;
+	
+	//ユーザが管理するショップを
+	public List<Shop> getShopsByUser(Authentication auth) {
+		User user = authUtil.getUserByAuth(auth);
+		return userShopRepository.findShopsByUserId(user.getId());
+	}
+	
 	
 	/**
      * 画像ファイルを保存し、ファイル名を返す

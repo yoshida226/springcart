@@ -1,7 +1,9 @@
 package com.example.springcart.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.springcart.entity.Product;
@@ -40,6 +43,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	//管理画面の商品一覧を表示
 	@GetMapping("/list")
 	public String showProductList(@RequestParam(required = false) Integer shopId,
 								  Authentication auth,
@@ -50,10 +54,10 @@ public class AdminController {
 		List<Product> products = new ArrayList<>();
 		if(shopId != null) {
 			//ショップが選択されたらそのショップの商品を表示
-			products.addAll(productRepository.findByShop(shopRepository.findById(shopId).orElseThrow()));
+			products.addAll(productRepository.findByShopOrderByUpdatedDateDesc(shopRepository.findById(shopId).orElseThrow()));
 		} else {
 			//初期表示時は先頭のショップの商品を表示
-			products.addAll(productRepository.findByShop(shops.get(0)));
+			products.addAll(productRepository.findByShopOrderByUpdatedDateDesc(shops.get(0)));
 		}
 		
 		List<ProductUpdateForm> productUpdateForms = products.stream()
@@ -124,10 +128,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("/confirm")
-	public String confirmProduct(@ModelAttribute("productForm") ProductRegisterForm productRegisterForm,
+	public String confirmProduct(@ModelAttribute("productForm") @Validated ProductRegisterForm productRegisterForm,
 								BindingResult result,
 								Authentication auth,
-								Model model) {
+								Model model) throws IOException {
 
 		//バリデーションエラー発生時の処理
 		if(result.hasErrors()) {
@@ -141,6 +145,14 @@ public class AdminController {
 			return "admin/register";
 		}
 		
+		//画像をベース64に変換
+		MultipartFile image =  productRegisterForm.getImageContent();
+		String base64Image = "";
+		if (image != null && !image.isEmpty()) {
+	        byte[] fileContent = image.getBytes();
+	        base64Image = Base64.getEncoder().encodeToString(fileContent);
+	    }
+		
 		ProductConfirmForm productConfirmForm = new ProductConfirmForm(productRegisterForm.getName(),
 																	   productRegisterForm.getCategory(),
 																	   productRegisterForm.getShop(),
@@ -148,14 +160,65 @@ public class AdminController {
 																	   productRegisterForm.getPrice(),
 																	   productRegisterForm.getStock(),
 																	   productRegisterForm.getImageContent(),
+																	   base64Image,
 																	   productRegisterForm.getImageContent().getOriginalFilename());
 		model.addAttribute("productConfirmForm", productConfirmForm);
 		
 		return "admin/confirm";
 	}
 	
-//	@PostMapping("/save")
-//	public String saveProduct() {
-//		
-//	}
+	@PostMapping("/complete")
+	public String saveProduct(@ModelAttribute("productConfirmForm") ProductConfirmForm form,
+							  RedirectAttributes redirectAttributes) {
+		
+		try {
+            // 画像ファイルが選択されている場合は保存
+			String base64Image = form.getBase64Image();
+            if (base64Image != null && !base64Image.isEmpty()) {
+            	// Content-Typeを取得（Base64文字列からMIMEタイプを抽出）
+                String contentType = "image/jpeg"; // デフォルト値
+                if (base64Image.startsWith("data:") && base64Image.contains(";base64,")) {
+                    contentType = base64Image.substring(5, base64Image.indexOf(";base64,"));
+                }
+                
+                // ファイル名を生成（実際の実装では適切なファイル名生成ロジックを使用）
+                String fileName = "image." + getExtensionFromContentType(contentType);
+                
+                // Base64からMultipartFileに変換
+                MultipartFile file = adminService.convertBase64ToMultipartFile(base64Image, fileName, contentType);
+                
+                //ファイルをストレージに保存
+                String fineNameRandomUUID = adminService.saveImage(file);
+                
+                // フォームに保存した画像名をセット
+                form.setImage(fineNameRandomUUID);
+            }
+            
+            // 商品情報を更新
+            adminService.insert(form);
+            
+            redirectAttributes.addFlashAttribute("successMessage", "商品を追加しました");
+            
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "商品の追加に失敗しました: " + e.getMessage());
+        }
+		
+		return "redirect:/admin/list";
+	}
+	
+	// Content-Typeから適切な拡張子を取得するヘルパーメソッド
+	private String getExtensionFromContentType(String contentType) {
+	    switch (contentType.toLowerCase()) {
+	        case "image/jpeg":
+	            return "jpg";
+	        case "image/png":
+	            return "png";
+	        case "image/gif":
+	            return "gif";
+	        case "image/webp":
+	            return "webp";
+	        default:
+	            return "jpg";
+	    }
+	}
 }

@@ -35,15 +35,18 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .defaultSuccessUrl("/", true)
                 .successHandler(successHandler)
-                .failureUrl("/auth/login?error=true")
+                .failureUrl("/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/auth/login?logout")
+                .logoutSuccessUrl("/login?logout")
                 .invalidateHttpSession(true) // セッションを無効化
                 .clearAuthentication(true) // 認証情報をクリア
                 .permitAll()
             )
+            .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/create-checkout-session")
+                )
             .userDetailsService(userDetailsService)
             .build();
     }

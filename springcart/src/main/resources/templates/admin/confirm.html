@@ -60,7 +60,19 @@
             <input type="hidden" th:field="*{productConfirmForm.description}" />
             <input type="hidden" th:field="*{productConfirmForm.price}" />
             <input type="hidden" th:field="*{productConfirmForm.stock}" />
-            <!-- 画像はセッションや一時保存を使って保持する必要あり -->
+			<input type="hidden" th:field="*{productConfirmForm.base64Image}" />
+			
+			<!-- 確認画面での画像プレビュー表示 -->
+			<div th:if="${productConfirmForm.base64Image != null && !productConfirmForm.base64Image.empty}">
+			  <img th:src="@{data:image/jpeg;base64,__${productConfirmForm.base64Image}__}" 
+			       class="springcart-img-preview" 
+			       alt="商品画像プレビュー">
+			</div>
+
+			<!-- 画像がない場合の表示 -->
+			<div th:unless="${productConfirmForm.base64Image != null && !productConfirmForm.base64Image.empty}">
+				<img src="/images/noImage.jpg" class="springcart-img-preview mb-3" alt="no image">
+			</div>
             
             <div class="text-center mt-4">
                 <a class="btn btn-secondary me-3" th:href="@{/admin/register}">戻る</a>

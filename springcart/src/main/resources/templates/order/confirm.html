@@ -3,6 +3,8 @@
 <head>
 	<div th:replace="~{fragment :: meta}"></div>
 	<div th:replace="~{fragment :: style}"></div>
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 
 <title>注文確認</title>
 </head>
@@ -39,9 +41,7 @@
 			        <div class="springcart-total" th:text="${'合計金額: ¥' + #numbers.formatInteger(totalPrice, 1, 'COMMA')}">
 			        </div>
 					<div>
-						<form th:action="@{/order/complete}" method="post">
-						    <button class="springcart-btn" type="submit">注文確定</button>
-						</form>
+						<button class="springcart-btn" id="checkout-button" type="button">注文確定</button>
 			    	</div>
 				</div>
 			</div>
@@ -49,7 +49,8 @@
 	</main>
 	<!--JS-->
 	<div th:replace="~{fragment :: js}"></div>
-	
+	<script src="https://js.stripe.com/v3/"></script>
+	<script th:src="@{/js/stripe.js}"></script>
 	<!--フッター-->
 	<div th:replace="~{fragment :: footer}"></div>
 </body>

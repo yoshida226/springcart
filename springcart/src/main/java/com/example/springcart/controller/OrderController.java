@@ -10,8 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springcart.entity.CartItem;
 import com.example.springcart.entity.Orders;
@@ -74,15 +74,21 @@ public class OrderController {
 	}
 	
 	//注文確定
-	@PostMapping("/complete")
-	public String completeOrder(HttpSession session,
-							    Authentication auth) {
+	@GetMapping("/complete")
+	public String completeOrder(@RequestParam(name = "status") String status,
+								HttpSession session,
+							    Authentication auth,
+							    Model model) {
 		
 		List<OrderConfirmForm> orderConfirmForms = (List<OrderConfirmForm>) session.getAttribute("orderConfirmForms");
 		Integer totalPrice = (Integer) session.getAttribute("totalPrice");
 		orderService.completeOrder(orderConfirmForms, totalPrice, auth);
 		
-		return "redirect:/order/history";
+		if(status.equals("cancel")) {
+			return "redirect:/order/history?cancel";
+		}
+		
+		return "redirect:/order/history?success";
 	}
 	
 	//注文履歴閲覧

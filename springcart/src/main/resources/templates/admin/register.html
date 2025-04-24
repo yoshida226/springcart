@@ -55,9 +55,11 @@
 	            </div>
 	
 	            <div class="mb-4 col-md-3">
-	                <label for="image" class="form-label">商品画像</label>
-					<img src="/images/product_001" class="springcart-img-preview mb-3" alt="商品画像">
-	                <input type="file" class="form-control" name="imageContent" id="imageContent" th:field="*{imageContent}">
+					<label for="image" class="form-label">商品画像</label>
+					<div>
+						<img src="/images/noImage.jpg" class="springcart-img-preview mb-3" alt="商品画像">
+						<input type="file" class="form-control" name="imageContent" id="imageContent" th:field="*{imageContent}">	
+					</div>
 	            </div>
 	
 	            <div class="text-center">

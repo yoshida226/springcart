@@ -23,7 +23,9 @@ public class ProductConfirmForm {
 
 	private Integer stock;
 	
-	private MultipartFile imageContent;//フォームからアップロードされる画像
+	private MultipartFile imageContent;//画像の内容
+	
+	private String base64Image;//画面表示用base64画像
 	
 	private String image;// 表示用：今登録されてる画像のパス
 }

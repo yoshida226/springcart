@@ -17,6 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public Page<Product> findByCategory(String category, Pageable pageable);
 	public Optional<Product> findById(Integer product);
 	public List<Product> findTop4ByCategoryOrderByCreatedDateDesc(String category);
-	public List<Product> findByShop(Shop shop);
+	public List<Product> findByShopOrderByUpdatedDateDesc(Shop shop);
 	
 }

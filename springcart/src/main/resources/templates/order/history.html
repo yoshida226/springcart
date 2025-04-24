@@ -15,6 +15,13 @@
 	    <div th:if="${#lists.isEmpty(orders)}">
 	        <p>注文履歴がありません。</p>
 	    </div>
+		
+		<div th:if="${param.success}">
+		    <div class="alert alert-success" role="alert">ご注文ありがとうございました！</div>
+		</div>
+		<div th:if="${param.cancel}">
+		    <div class="alert alert-warning" role="alert">お支払いがキャンセルされました。</div>
+		</div>
 	
 		<div th:each="order, iterStat : ${orders}" class="mb-4 p-3 border rounded">
 			<div class="d-flex justify-content-between align-items-center"
